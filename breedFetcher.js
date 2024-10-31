@@ -1,11 +1,18 @@
 const needle = require('needle');
-let url = `https://api.thecatapi.com/v1/breeds/search?q=${process.argv[2]}`;
+// ${process.argv[2]}
+const fetchBreedDescription = function(breedName, callback) {
+  let url = `https://api.thecatapi.com/v1/breeds/search?q=${breedName}`;
 
-needle.get(`${url}`, (error, response, body) => {
-  if (error) console.log('error:', error); // Print the error if one occurred
-  if (Object.keys(body).length === 0) {
-    console.log('No information found for that breed');    
-  } else {
-    console.log(body);
-  }
-});
+  needle.get(`${url}`, (error, response, body) => {
+    if (error) {
+      callback(error);
+    } else {
+      if (Object.keys(body).length === 0) {
+        callback('No information found for that breed', null);
+      } else {
+        callback(null, body[0].description);
+      }
+    }
+  });
+};
+module.exports = { fetchBreedDescription };
