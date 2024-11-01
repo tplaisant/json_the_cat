@@ -19,9 +19,6 @@ describe('fetchBreedDescription', () => {
     fetchBreedDescription('Tiago', (err, desc) => {
       // we expect error for this scenario
       assert.equal(err, "No information found for that breed");
-
-      const expectedDesc = "No information found for that breed";
-
       done();
     });
   });
